@@ -28,7 +28,7 @@ import net.fabricmc.loader.api.FabricLoader;
 
 class SchematicTest {
     public static void test() throws IOException {
-        SchematicMetadata meta = new SchematicMetadata("Dimdoors Test Schematic", "Dimensional Development", System.currentTimeMillis(), ImmutableList.of("dimdoors"));
+        SchematicMetadata meta = new SchematicMetadata("LibSchem Test Schematic", "BoogieMonster1O1", System.currentTimeMillis(), ImmutableList.of("minecraft"));
         BlockEntity be = new BlastFurnaceBlockEntity();
         be.setPos(new BlockPos(0, 0, 0));
         CompoundTag beTag = new CompoundTag();
