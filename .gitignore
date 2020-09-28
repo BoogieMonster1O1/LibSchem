@@ -6,3 +6,4 @@ target
 libs
 *.iml
 .DS_Store
+publish.sh
