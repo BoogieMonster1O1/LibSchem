@@ -15,7 +15,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.boogiemonster1o1.libschem.impl.Libschem"
+      "io.github.boogiemonster1o1.libschem.impl.LibSchem"
     ]
   }
 }
