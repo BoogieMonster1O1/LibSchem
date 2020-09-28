@@ -1,7 +1,17 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+    }
+}
 plugins {
     id 'fabric-loom' version '0.5-SNAPSHOT'
     id 'maven-publish'
 }
+
+apply plugin: 'com.jfrog.bintray'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -54,6 +64,28 @@ jar {
     from "LICENSE"
 }
 
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_KEY')
+    publications = ["mavenJava"]
+    publish = true
+    pkg {
+        repo = "cool-mods"
+        name = "LibSchem"
+        licenses = ["CC0-1.0"]
+        version {
+            released = new Date()
+            githubRepo = 'BoogieMonster1O1/LibSchem'
+            websiteUrl = 'https://github.com/BoogieMonster1O1/LibSchem'
+            issueTrackerUrl = 'https://github.com/BoogieMonster1O1/LibSchem/issues'
+            vcsUrl = 'https://github.com/BoogieMonster1O1/LibSchem.git'
+            gpg {
+                sign = true
+            }
+        }
+    }
+}
+
 // configure the maven publication
 publishing {
     publications {
@@ -64,6 +96,12 @@ publishing {
             }
             artifact(sourcesJar) {
                 builtBy remapSourcesJar
+            }
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'A schematic parser and placer for Fabric')
+                root.appendNode('name', 'LibSchem')
+                root.appendNode('url', 'https://github.com/BoogieMonster1O1/LibSchem')
             }
         }
     }
