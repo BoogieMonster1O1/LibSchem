@@ -39,7 +39,10 @@ class SchematicTest {
         e.saveSelfToTag(eTag);
         Schematic schematic = new Schematic(2, 2543, meta, (short) 5, (short) 5, (short) 5, Vec3i.ZERO, -1, ImmutableBiMap.of(Blocks.AIR.getDefaultState(), 0, Blocks.NETHERRACK.getDefaultState(), 1), ByteBuffer.wrap(new byte[]{1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0}), ImmutableList.of(beTag), ImmutableList.of(eTag));
         DataResult<Tag> result = Schematic.CODEC.encodeStart(NbtOps.INSTANCE, schematic);
-        Path path = FabricLoader.getInstance().getConfigDir().resolve("config").resolve("libschem_test_schematic.schem");
+        Path path = FabricLoader.getInstance().getConfigDir().resolve("libschem_test_schematic.schem");
+        if (!Files.exists(FabricLoader.getInstance().getConfigDir())) {
+            Files.createDirectories(FabricLoader.getInstance().getConfigDir());
+        }
         if (!Files.exists(path)) {
             Files.createFile(path);
         }
