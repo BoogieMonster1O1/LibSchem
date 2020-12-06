@@ -24,17 +24,4 @@ public final class SchematicPlacer {
         RelativeBlockSample blockSample = Schematic.getBlockSample(schematic, world);
         blockSample.place(origin);
     }
-
-    static int[][][] getBlockData(Schematic schematic, int width, int height, int length) {
-        byte[] blockDataIntArray = schematic.getBlockData().array();
-        int[][][] blockData = new int[width][height][length];
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                for (int z = 0; z < length; z++) {
-                    blockData[x][y][z] = blockDataIntArray[x + z * width + y * width * length];
-                }
-            }
-        }
-        return blockData;
-    }
 }

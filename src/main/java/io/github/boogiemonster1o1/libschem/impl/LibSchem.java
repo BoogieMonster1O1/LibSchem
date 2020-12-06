@@ -17,7 +17,7 @@ public class LibSchem implements ModInitializer {
     public void onInitialize() {
         LogManager.getLogger().info("Initializing LibSchem - Powered by DataFixerUpper");
 
-        if (FabricLoader.getInstance().isModLoaded("fabric")) {
+        if (FabricLoader.getInstance().isModLoaded("fabric") && FabricLoader.getInstance().isDevelopmentEnvironment()) {
             this.doFapiStuff();
         }
     }

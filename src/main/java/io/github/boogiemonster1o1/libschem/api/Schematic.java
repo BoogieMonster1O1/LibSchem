@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.boogiemonster1o1.libschem.impl.SchematicBlockPalette;
 
 import net.minecraft.SharedConstants;
 import net.minecraft.block.BlockState;
@@ -136,5 +137,18 @@ public class Schematic {
 
     public static JsonObject toJson(Schematic schem) {
         return (JsonObject) CODEC.encodeStart(JsonOps.INSTANCE, schem).getOrThrow(false, PRINT_TO_STDERR);
+    }
+
+    public static int[][][] getBlockData(Schematic schematic, int width, int height, int length) {
+        byte[] blockDataIntArray = schematic.getBlockData().array();
+        int[][][] blockData = new int[width][height][length];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                for (int z = 0; z < length; z++) {
+                    blockData[x][y][z] = blockDataIntArray[x + z * width + y * width * length];
+                }
+            }
+        }
+        return blockData;
     }
 }

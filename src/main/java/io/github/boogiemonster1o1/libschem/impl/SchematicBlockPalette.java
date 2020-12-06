@@ -1,4 +1,4 @@
-package io.github.boogiemonster1o1.libschem.api;
+package io.github.boogiemonster1o1.libschem.impl;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -29,14 +29,18 @@ public class SchematicBlockPalette {
                 BlockState state = Registry.BLOCK.get(new Identifier(string)).getDefaultState();
                 return DataResult.success(state);
             } else {
-                Block block = Objects.requireNonNull(Registry.BLOCK.get(new Identifier(string.substring(0, string.indexOf("[")))));
+                Block block = Registry.BLOCK.get(new Identifier(string.substring(0, string.indexOf("["))));
                 BlockState state = block.getDefaultState();
 
                 System.out.println(state);
 
                 String[] stateArray = string.substring(string.indexOf("[") + 1, string.length() - 1).split(",");
                 for (String stateString : stateArray) {
-                    Property<?> property = Objects.requireNonNull(block.getStateManager().getProperty(stateString.split("=")[0]));
+                    String name = stateString.split("=")[0];
+                    Property<?> property = block.getStateManager().getProperty(name);
+                    if (property == null) {
+                        return DataResult.error("Unknown property '" + name + "' for block " + block.toString(), state);
+                    }
                     state = process(property, stateString.split("=")[1], state);
                 }
 
